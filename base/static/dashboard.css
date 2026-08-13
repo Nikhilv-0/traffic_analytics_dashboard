@@ -1,0 +1,452 @@
+/* ===================================================================
+   RoadPulse — Dashboard
+   Bootstrap 5 is the layout/grid engine; these rules re-skin it to the
+   same asphalt / amber / teal control-room theme used on login & admin.
+
+   STEP 1: base tokens + navbar + status banner only.
+   More sections (stat cards, map, table, sidebar, charts, footer)
+   will be appended here in later steps.
+   =================================================================== */
+
+:root, [data-bs-theme="dark"] {
+    --RP-asphalt-950: #0b0f14;
+    --RP-asphalt-900: #10161d;
+    --RP-asphalt-800: #171f28;
+    --RP-asphalt-700: #212b36;
+    --RP-lane-amber: #f2a93b;
+    --RP-signal-teal: #3fc1b0;
+    --RP-fog-100: #eaeef2;
+    --RP-fog-300: #c3cbd3;
+    --RP-fog-500: #8b97a3;
+    --RP-alert-red: #e1543a;
+    --RP-ok-green: #4caf7d;
+
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+    /* Bootstrap variable overrides */
+    --bs-body-bg: var(--RP-asphalt-950);
+    --bs-body-color: var(--RP-fog-100);
+    --bs-border-color: var(--RP-asphalt-700);
+    --bs-primary: var(--RP-lane-amber);
+    --bs-body-font-family: var(--font-body);
+}
+
+body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
+
+/* ---------------------------- Navbar --------------------------- */
+
+.RP-navbar {
+    background: var(--RP-asphalt-900);
+    border-bottom: 1px solid var(--RP-asphalt-700);
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.RP-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--RP-fog-100) !important;
+}
+
+.RP-navbar .nav-link {
+    color: var(--RP-fog-300);
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 0.4rem 0.85rem !important;
+}
+
+.RP-navbar .nav-link.active,
+.RP-navbar .nav-link:hover { color: var(--RP-lane-amber); }
+
+.RP-btn-amber {
+    background: var(--RP-lane-amber);
+    border: none;
+    color: var(--RP-asphalt-950);
+    font-weight: 600;
+}
+
+.RP-btn-amber:hover { background: #f5b95c; color: var(--RP-asphalt-950); }
+
+.RP-icon-btn {
+    background: var(--RP-asphalt-800);
+    border: 1px solid var(--RP-asphalt-700);
+    color: var(--RP-fog-300);
+    border-radius: 8px;
+    padding: 0.45rem 0.65rem;
+}
+
+.RP-icon-btn:hover { border-color: var(--RP-signal-teal); color: var(--RP-signal-teal); }
+
+.RP-badge-dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--RP-alert-red);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    line-height: 1;
+    padding: 3px 5px;
+    border-radius: 999px;
+    border: 2px solid var(--RP-asphalt-900);
+}
+
+.RP-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--RP-signal-teal);
+    color: var(--RP-asphalt-950);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.RP-dropdown {
+    background: var(--RP-asphalt-800);
+    border: 1px solid var(--RP-asphalt-700);
+}
+
+.RP-dropdown .dropdown-item {
+    color: var(--RP-fog-300);
+    font-size: 0.88rem;
+}
+
+.RP-dropdown .dropdown-item:hover { background: var(--RP-asphalt-700); color: var(--RP-fog-100); }
+
+.RP-dropdown-header {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-bottom: 1px solid var(--RP-asphalt-700);
+}
+
+.RP-link { color: var(--RP-signal-teal); text-decoration: none; }
+.RP-link:hover { text-decoration: underline; color: var(--RP-signal-teal); }
+
+.RP-subtle { color: var(--RP-fog-500); font-size: 0.8rem; }
+
+.RP-notif-item {
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--RP-asphalt-700);
+}
+.RP-notif-item:last-child { border-bottom: none; }
+.RP-notif-item i { font-size: 1rem; margin-top: 2px; }
+
+/* ---------------------------- Status banner --------------------------- */
+
+.RP-status-banner {
+    background: var(--RP-asphalt-900);
+    border-bottom: 1px solid var(--RP-asphalt-700);
+    padding: 0.55rem 0;
+    font-size: 0.85rem;
+}
+
+.RP-live-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--RP-alert-red);
+}
+
+.RP-live-dot i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--RP-alert-red);
+    animation: RP-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes RP-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+.RP-status-text strong { color: var(--RP-lane-amber); }
+
+.RP-status-legend {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--RP-fog-500);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.RP-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 0.7rem; margin-right: 0.25rem; }
+.RP-dot:first-child { margin-left: 0; }
+.RP-dot-low { background: var(--RP-ok-green); }
+.RP-dot-mod { background: var(--RP-lane-amber); }
+.RP-dot-high { background: var(--RP-alert-red); }
+
+.RP-status-updated {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--RP-fog-500);
+}
+
+/* ---------------------------- Cards --------------------------- */
+
+.RP-card {
+    background: var(--RP-asphalt-900);
+    border: 1px solid var(--RP-asphalt-700);
+    border-radius: 12px;
+    padding: 1.1rem 1.25rem;
+}
+
+/* Stat cards */
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    height: 100%;
+}
+
+.stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex: none;
+}
+
+.stat-icon-amber { background: rgba(242, 169, 59, 0.14); color: var(--RP-lane-amber); }
+.stat-icon-teal { background: rgba(63, 193, 176, 0.14); color: var(--RP-signal-teal); }
+.stat-icon-green { background: rgba(76, 175, 125, 0.14); color: var(--RP-ok-green); }
+.stat-icon-red { background: rgba(225, 84, 58, 0.14); color: var(--RP-alert-red); }
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.stat-value .unit { font-size: 0.85rem; color: var(--RP-fog-500); font-weight: 500; }
+
+.stat-label { font-size: 0.78rem; color: var(--RP-fog-500); margin: 0.15rem 0 0.3rem; }
+
+.stat-trend { font-size: 0.75rem; font-family: var(--font-mono); display: flex; align-items: center; }
+.trend-up { color: var(--RP-ok-green); }
+.trend-down { color: var(--RP-alert-red); }
+.trend-flat { color: var(--RP-fog-500); }
+
+.RP-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--RP-asphalt-700);
+}
+
+.RP-card-header h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ---------------------------- Table --------------------------- */
+
+.RP-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--RP-fog-100);
+    --bs-table-border-color: var(--RP-asphalt-700);
+    margin-bottom: 0;
+}
+
+.RP-table thead th {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--RP-fog-500);
+    font-weight: 600;
+    border-bottom-width: 1px;
+    padding: 0.9rem 1.25rem;
+}
+
+.RP-table tbody td { padding: 0.85rem 1.25rem; font-size: 0.88rem; vertical-align: middle; }
+.RP-table tbody tr:hover { background: var(--RP-asphalt-800); }
+
+/* ---------------------------- Map --------------------------- */
+
+#trafficMap { height: 420px; width: 100%; background: var(--RP-asphalt-800); }
+
+.RP-toggle-btn {
+    background: var(--RP-asphalt-800);
+    border: 1px solid var(--RP-asphalt-700);
+    color: var(--RP-fog-300);
+    font-size: 0.78rem;
+}
+
+.RP-toggle-btn.active,
+.RP-toggle-btn:hover {
+    background: var(--RP-lane-amber);
+    border-color: var(--RP-lane-amber);
+    color: var(--RP-asphalt-950);
+}
+
+.RP-map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78rem;
+    color: var(--RP-fog-500);
+    border-top: 1px solid var(--RP-asphalt-700);
+}
+
+.RP-marker-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.35rem;
+}
+
+.badge-severity, .badge-status {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 0.3rem 0.55rem;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.badge-high { background: rgba(225, 84, 58, 0.15); color: var(--RP-alert-red); }
+.badge-medium { background: rgba(242, 169, 59, 0.15); color: var(--RP-lane-amber); }
+.badge-low { background: rgba(76, 175, 125, 0.15); color: var(--RP-ok-green); }
+
+.badge-pending { background: rgba(139, 151, 163, 0.18); color: var(--RP-fog-300); }
+.badge-verified { background: rgba(63, 193, 176, 0.15); color: var(--RP-signal-teal); }
+.badge-resolved { background: rgba(76, 175, 125, 0.15); color: var(--RP-ok-green); }
+
+/* ---------------------------- Weather --------------------------- */
+
+.weather-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.weather-icon { font-size: 2.4rem; color: var(--RP-lane-amber); }
+.weather-temp { font-family: var(--font-display); font-size: 2rem; font-weight: 600; line-height: 1; }
+.weather-cond { color: var(--RP-fog-500); font-size: 0.85rem; }
+
+.weather-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--RP-asphalt-700);
+}
+
+.weather-grid div { text-align: center; }
+.weather-grid .w-val { font-family: var(--font-mono); font-size: 0.9rem; color: var(--RP-fog-100); }
+.weather-grid .w-label { font-size: 0.68rem; color: var(--RP-fog-500); }
+
+/* ---------------------------- Congestion prediction --------------------------- */
+
+.prediction-item .p-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem; }
+.prediction-item .p-road { color: var(--RP-fog-100); }
+.prediction-item .p-level { font-family: var(--font-mono); font-size: 0.72rem; }
+
+.progress { background: var(--RP-asphalt-800); height: 6px; border-radius: 999px; }
+.progress-bar-high { background: var(--RP-alert-red); }
+.progress-bar-medium { background: var(--RP-lane-amber); }
+.progress-bar-low { background: var(--RP-ok-green); }
+
+/* ---------------------------- Quick actions --------------------------- */
+
+.RP-quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.75rem;
+}
+
+.RP-quick-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--RP-asphalt-800);
+    border: 1px solid var(--RP-asphalt-700);
+    border-radius: 10px;
+    padding: 0.9rem 0.5rem;
+    color: var(--RP-fog-300);
+    font-size: 0.76rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.RP-quick-btn i { font-size: 1.2rem; color: var(--RP-signal-teal); }
+.RP-quick-btn:hover { border-color: var(--RP-signal-teal); color: var(--RP-fog-100); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------------------------- Charts --------------------------- */
+
+.chart-wrap { position: relative; height: 230px; margin-top: 0.75rem; }
+
+/* ---------------------------- Responsive --------------------------- */
+
+@media (max-width: 576px) {
+    .RP-status-legend { display: none; }
+}
+
+@media (max-width: 991px) {
+    #trafficMap { height: 320px; }
+}
+
+/* ---------------------------- Focus visibility --------------------------- */
+
+a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--RP-signal-teal);
+    outline-offset: 2px;
+}
+
+/* ---------------------------- Footer --------------------------- */
+
+.RP-footer {
+    background: var(--RP-asphalt-900);
+    border-top: 1px solid var(--RP-asphalt-700);
+    padding: 2.5rem 0 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.88rem;
+}
+
+.RP-footer h6 {
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--RP-fog-300);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+}
+
+.RP-footer-links li { margin-bottom: 0.5rem; }
+.RP-footer-links a { color: var(--RP-fog-500); text-decoration: none; font-size: 0.85rem; }
+.RP-footer-links a:hover { color: var(--RP-signal-teal); }
+
+.RP-footer-hr { border-color: var(--RP-asphalt-700); margin: 1.75rem 0 1rem; }

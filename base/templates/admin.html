@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin · RoadPulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/admin.css">
+</head>
+<body>
+
+    <div class="admin-shell">
+
+        <!-- Top bar -->
+        <header class="topbar">
+            <div class="brand-mark">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M12 2 L12 22" stroke="#F2A93B" stroke-width="2.4" stroke-dasharray="3 3"/>
+                    <circle cx="12" cy="12" r="9" stroke="#3FC1B0" stroke-width="1.6"/>
+                </svg>
+                <span>RoadPulse</span>
+                <span class="admin-tag">Admin</span>
+            </div>
+
+            <div class="topbar-right">
+                <div class="topbar-status" role="status" aria-live="polite">
+                    <span class="status-dot" data-state="offline"></span>
+                    <span id="connection-label">Not connected to database</span>
+                </div>
+
+                <div class="user-menu">
+                    <button class="user-menu-btn" type="button" id="user-menu-toggle" aria-haspopup="true" aria-expanded="false">
+                        <span class="user-avatar">{{ current_user.name[0]|upper }}</span>
+                        <span class="user-name">{{ current_user.name }}</span>
+                    </button>
+                    <ul class="user-menu-dropdown" id="user-menu-dropdown" hidden>
+                        <li><a href="/profile">Profile</a></li>
+                        <li><a href="/my-reports">My Reports</a></li>
+                        <li class="user-menu-divider"></li>
+                        <li><a href="/logout" class="user-menu-danger">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <main class="admin-main">
+
+            <!-- Summary strip -->
+            <section class="summary-strip" aria-label="Overview">
+                <div class="summary-card">
+                    <span class="summary-value" id="count-pending">0</span>
+                    <span class="summary-label">Pending review</span>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-value" id="count-approved">0</span>
+                    <span class="summary-label">Approved today</span>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-value" id="count-sessions">0</span>
+                    <span class="summary-label">Users signed in</span>
+                </div>
+            </section>
+
+            <div class="panel-grid">
+
+                <!-- Incident validation queue -->
+                <section class="panel" aria-labelledby="incidents-heading">
+                    <div class="panel-header">
+                        <h2 id="incidents-heading">Incident validation queue</h2>
+                        <button class="btn-ghost" id="refresh-incidents" type="button">Refresh</button>
+                    </div>
+
+                    <div id="incidents-list" class="list">
+                        <!-- populated by admin.js, or shows empty state -->
+                    </div>
+                </section>
+
+                <!-- Active sessions -->
+                <section class="panel" aria-labelledby="sessions-heading">
+                    <div class="panel-header">
+                        <h2 id="sessions-heading">Users currently logged in</h2>
+                        <button class="btn-ghost" id="refresh-sessions" type="button">Refresh</button>
+                    </div>
+
+                    <div id="sessions-list" class="list">
+                        <!-- populated by admin.js, or shows empty state -->
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <template id="incident-row-template">
+        <article class="row" data-id="">
+            <img class="row-photo" alt="Incident photo" hidden>
+            <div class="row-main">
+                <div class="row-heading">
+                    <span class="row-type"></span>
+                    <span class="row-time"></span>
+                </div>
+                <p class="row-desc"></p>
+                <span class="row-location"></span>
+            </div>
+            <div class="row-actions">
+                <button type="button" class="btn-approve">Approve</button>
+                <button type="button" class="btn-reject">Reject</button>
+            </div>
+        </article>
+    </template>
+
+    <template id="session-row-template">
+        <article class="row">
+            <div class="row-main">
+                <div class="row-heading">
+                    <span class="row-type"></span>
+                    <span class="row-time"></span>
+                </div>
+                <span class="row-location"></span>
+            </div>
+        </article>
+    </template>
+
+    <script src="/static/admin.js"></script>
+</body>
+</html>

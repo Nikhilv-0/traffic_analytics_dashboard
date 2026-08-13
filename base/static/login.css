@@ -1,0 +1,349 @@
+/* ===================================================================
+   RoadPulse — Login / Register
+   Theme: night traffic-control room — asphalt base, amber lane-marking
+   accent, teal data accent, LED-signage mono type for live stats.
+   =================================================================== */
+
+:root {
+    --asphalt-950: #0b0f14;
+    --asphalt-900: #10161d;
+    --asphalt-800: #171f28;
+    --asphalt-700: #212b36;
+    --lane-amber: #f2a93b;
+    --lane-amber-dim: #a9762c;
+    --signal-teal: #3fc1b0;
+    --fog-100: #eaeef2;
+    --fog-300: #c3cbd3;
+    --fog-500: #8b97a3;
+    --alert-red: #e1543a;
+    --ok-green: #4caf7d;
+
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--asphalt-950);
+    color: var(--fog-100);
+    -webkit-font-smoothing: antialiased;
+}
+
+.screen {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* ---------------------------- Left panel --------------------------- */
+
+.brand-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem 3.25rem;
+    background:
+        radial-gradient(circle at 20% 15%, rgba(63, 193, 176, 0.10), transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(242, 169, 59, 0.08), transparent 50%),
+        var(--asphalt-900);
+    overflow: hidden;
+}
+
+.grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(234, 238, 242, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(234, 238, 242, 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(180deg, transparent, black 20%, black 80%, transparent);
+}
+
+.brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    z-index: 1;
+}
+
+.brand-copy { z-index: 1; max-width: 30rem; }
+
+.brand-copy h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 3vw, 2.6rem);
+    line-height: 1.15;
+    font-weight: 600;
+    margin: 0 0 1rem;
+    color: var(--fog-100);
+}
+
+.brand-copy p {
+    color: var(--fog-500);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ---------------------------- Right panel --------------------------- */
+
+.auth-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+    background: var(--asphalt-950);
+}
+
+.container {
+    width: 100%;
+    max-width: 380px;
+}
+
+/* Tabs styled like a two-way road sign toggle */
+.tab-input { display: none; }
+
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--asphalt-800);
+    border: 1px solid var(--asphalt-700);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 1.75rem;
+}
+
+.tabs label {
+    text-align: center;
+    padding: 0.55rem 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--fog-500);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+#login-tab:checked ~ .tabs label[for="login-tab"],
+#register-tab:checked ~ .tabs label[for="register-tab"] {
+    background: var(--lane-amber);
+    color: var(--asphalt-950);
+}
+
+.form-box { display: none; }
+#login-tab:checked ~ .login,
+#register-tab:checked ~ .register { display: block; }
+
+.form-box h1 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.3rem;
+}
+
+.subhead {
+    color: var(--fog-500);
+    font-size: 0.88rem;
+    margin: 0 0 1.5rem;
+}
+
+.form-message {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.65rem 0.85rem;
+    border-radius: 6px;
+    margin-bottom: 1.25rem;
+    border: 1px solid var(--alert-red);
+    color: var(--alert-red);
+    background: rgba(225, 84, 58, 0.08);
+}
+
+.form-message.success {
+    border-color: var(--ok-green);
+    color: var(--ok-green);
+    background: rgba(76, 175, 125, 0.08);
+}
+
+.input-box { margin-bottom: 1.1rem; }
+
+.input-box label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--fog-500);
+    margin-bottom: 0.4rem;
+}
+
+.input-box input[type="text"],
+.input-box input[type="email"],
+.input-box input[type="password"] {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    background: var(--asphalt-800);
+    border: 1px solid var(--asphalt-700);
+    border-radius: 8px;
+    color: var(--fog-100);
+    font-family: var(--font-body);
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-box input::placeholder { color: var(--fog-500); }
+
+.input-box input:focus {
+    border-color: var(--signal-teal);
+    box-shadow: 0 0 0 3px rgba(63, 193, 176, 0.18);
+}
+
+.input-box input:invalid:not(:placeholder-shown) {
+    border-color: var(--alert-red);
+}
+
+.password-field { position: relative; }
+
+.password-field input { padding-right: 2.6rem; }
+
+.toggle-visibility {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--fog-500);
+    cursor: pointer;
+    display: flex;
+    padding: 0.25rem;
+}
+
+.toggle-visibility:hover { color: var(--signal-teal); }
+
+.strength-meter {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.5rem;
+}
+
+.strength-meter span {
+    height: 3px;
+    flex: 1;
+    background: var(--asphalt-700);
+    border-radius: 2px;
+    transition: background 0.2s ease;
+}
+
+.strength-meter.weak span:nth-child(1) { background: var(--alert-red); }
+.strength-meter.fair span:nth-child(1),
+.strength-meter.fair span:nth-child(2) { background: var(--lane-amber); }
+.strength-meter.good span:nth-child(1),
+.strength-meter.good span:nth-child(2),
+.strength-meter.good span:nth-child(3) { background: var(--signal-teal); }
+.strength-meter.strong span { background: var(--ok-green); }
+
+.hint {
+    font-size: 0.76rem;
+    color: var(--fog-500);
+    margin: 0.4rem 0 0;
+}
+
+.hint-error { color: var(--alert-red); }
+
+.row-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--fog-300);
+    cursor: pointer;
+}
+
+.checkbox-label.terms {
+    align-items: flex-start;
+    margin-bottom: 1.4rem;
+    line-height: 1.4;
+}
+
+.checkbox-label input {
+    accent-color: var(--signal-teal);
+    width: 15px;
+    height: 15px;
+    margin-top: 1px;
+}
+
+.link {
+    color: var(--signal-teal);
+    font-size: 0.82rem;
+    text-decoration: none;
+}
+
+.link:hover { text-decoration: underline; }
+
+.btn {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--lane-amber);
+    color: var(--asphalt-950);
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover { background: #f5b95c; }
+.btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.btn-spinner {
+    display: none;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(11, 15, 20, 0.35);
+    border-top-color: var(--asphalt-950);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+}
+
+.btn.loading .btn-spinner { display: inline-block; }
+.btn.loading .btn-label { opacity: 0.7; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------------------------- Responsive --------------------------- */
+
+@media (max-width: 860px) {
+    .screen { grid-template-columns: 1fr; }
+    .brand-panel { display: none; }
+    .auth-panel { padding: 2rem 1.25rem; }
+}
+
+/* ---------------------------- Focus visibility ----------------------- */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+label:focus-visible {
+    outline: 2px solid var(--signal-teal);
+    outline-offset: 2px;
+}
