@@ -1,0 +1,12 @@
+/* ===================================================================
+   RoadPulse — All Incidents page
+   Tokens, navbar, footer, .RP-card/.RP-table/.RP-thumb are already
+   defined in dashboard.css (loaded before this file). Nothing else on
+   this page needs custom styling.
+   =================================================================== */
+
+.RP-page-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: 0 0 0.35rem;
+}
